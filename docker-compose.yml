@@ -1,5 +1,5 @@
 errbit:
-  image: errbit/errbit:latest
+  build: .
   ports:
     - "8080:8080"
   links:
@@ -8,6 +8,7 @@ errbit:
     - PORT=8080
     - RACK_ENV=production
     - MONGO_URL=mongodb://mongo:27017/errbit
+    - ERRBIT_USER_HAS_USERNAME=true
 mongo:
   image: mongo:3.2
   ports:
