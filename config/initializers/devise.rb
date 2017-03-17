@@ -1,7 +1,10 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
-  # ==> LDAP Configuration 
+  config.warden do |manager|
+    manager.default_strategies(:scope => :user).unshift :ldap_authenticatable
+  end
+  # ==> LDAP Configuration
   # config.ldap_logger = true
   # config.ldap_create_user = false
   # config.ldap_update_password = true
@@ -292,4 +295,11 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.ldap_create_user = true
+  config.ldap_use_admin_to_bind = true
+  config.ldap_logger = true
+  config.ldap_check_attributes = true
+
+  config.ldap_auth_username_builder = Proc.new do |attribute, login, ldap|
+    "#{login}@XING"
+  end
 end
